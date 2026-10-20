@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 14/10/2026 às 19:54
+-- Tempo de geração: 20/10/2026 às 20:17
 -- Versão do servidor: 8.4.11-0ubuntu0.26.04.1
 -- Versão do PHP: 8.5.4
 
@@ -24,20 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `items`
---
-
-CREATE TABLE `items` (
-  `codigo` int NOT NULL COMMENT 'Código do Item',
-  `descricao` varchar(100) NOT NULL COMMENT 'Descrição (nome) do item na lista',
-  `quantidade` decimal(12,2) DEFAULT NULL,
-  `datahora` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `codigo_lista` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `lista`
 --
 
@@ -51,19 +37,12 @@ CREATE TABLE `lista` (
 --
 
 INSERT INTO `lista` (`codigo`, `nome`) VALUES
-(1, 'Casa'),
-(2, 'Trabalho'),
-(3, 'Viagem');
+(6, 'Casa'),
+(7, 'Sitio');
 
 --
 -- Índices para tabelas despejadas
 --
-
---
--- Índices de tabela `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`codigo`);
 
 --
 -- Índices de tabela `lista`
@@ -77,16 +56,10 @@ ALTER TABLE `lista`
 --
 
 --
--- AUTO_INCREMENT de tabela `items`
---
-ALTER TABLE `items`
-  MODIFY `codigo` int NOT NULL AUTO_INCREMENT COMMENT 'Código do Item';
-
---
 -- AUTO_INCREMENT de tabela `lista`
 --
 ALTER TABLE `lista`
-  MODIFY `codigo` int NOT NULL AUTO_INCREMENT COMMENT 'Código da Lista de Compra', AUTO_INCREMENT=4;
+  MODIFY `codigo` int NOT NULL AUTO_INCREMENT COMMENT 'Código da Lista de Compra', AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
