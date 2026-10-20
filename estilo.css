@@ -46,13 +46,22 @@ li {
     list-style: none;
     width: max-content;
     display: flexbox;
-    height: 42px;
+    height: auto;
     vertical-align: middle;
     padding: 3px 5px;
 }
 
+h4 {
+    margin: 5px;
+    padding: 2px;
+}
+
 li:hover {
-    background-color: lightblue;
+    background-color: aliceblue;
+}
+
+li.item:hover {
+    background-color: rgb(231, 242, 245);
 }
 
 footer {

@@ -22,9 +22,24 @@
                 echo "<ul>";
                 foreach ($stmt as $lista) {
                     echo "<li>" . $lista["codigo"] . " - " . $lista["nome"];
-                    echo "<button onclick='alterarlista(".$lista["codigo"].",\"".$lista["nome"]."\")'><img class='icon' src='img/update.png'></button>";
-                    echo "<button onclick='apagarlista(".$lista["codigo"].",\"".$lista["nome"]."\")'><img class='icon' src='img/delete.png'></button>" . "</li>";
+                    echo "<button onclick='incluiritens(".$lista["codigo"].",\"".$lista["nome"]."\")' title='Incluir Itens'><img class='icon' src='img/add.png'></button>";                    
+                    echo "<button onclick='alterarlista(".$lista["codigo"].",\"".$lista["nome"]."\")' title='Alterar Lista'><img class='icon' src='img/update.png'></button>";
+                    echo "<button onclick='apagarlista(".$lista["codigo"].",\"".$lista["nome"]."\")' title='Ecluir Lista'><img class='icon' src='img/delete.png'></button><br>";
+                    //Itens da Lista
 
+                        $stitem = $conn->prepare("SELECT * FROM itens WHERE codigo_lista = :codigo");
+                        $stitem->execute(["codigo" => $lista["codigo"]]);
+                        if ($stitem->rowCount() > 0) {
+                            echo "<h4>Itens: </h4>";
+                            echo "<ul>";
+                            foreach ($stitem as $item) {
+                                echo "<li class='item'>" . $item["codigo"] . " - " . $item["descricao"] . " - " . $item["quantidade"] . " - " . $item["datahora"];                    
+                                echo "<button onclick='alteraritem(".$item["codigo"].")' title='Alterar Item'><img class='icon' src='img/update.png'></button>";
+                                echo "<button onclick='apagaritem(".$lista["codigo"].",\"".$item["descricao"]."\")' title='Ecluir Item'><img class='icon' src='img/delete.png'></button>" . "</li>";
+                            }
+                            echo "</ul>";
+                        }
+                    echo "</li>";
                 }
                 echo "</ul>";
             } else {
