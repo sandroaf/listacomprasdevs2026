@@ -7,9 +7,9 @@
             $stmt->execute($parnome);
             header("Location: index.php");
         } catch (PDOException $e) {
-            echo "ERRO! Não foi possível inclir a lista: ".$e->getMessage();
+            $msg = htmlspecialchars("ERRO! Não foi possível inclir a lista: ".$e->getMessage());
+            header("Location: index.php?msg=$msg");    
         }
-
     } else {
         header("Location: incluirlista.php");
     }

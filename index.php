@@ -35,7 +35,7 @@
                             foreach ($stitem as $item) {
                                 echo "<li class='item'>" . $item["codigo"] . " - " . $item["descricao"] . " - " . $item["quantidade"] . " - " . $item["datahora"];                    
                                 echo "<button onclick='alteraritem(".$item["codigo"].")' title='Alterar Item'><img class='icon' src='img/update.png'></button>";
-                                echo "<button onclick='apagaritem(".$lista["codigo"].",\"".$item["descricao"]."\")' title='Ecluir Item'><img class='icon' src='img/delete.png'></button>" . "</li>";
+                                echo "<button onclick='apagaritem(".$item["codigo"].",\"".$item["descricao"]."\")' title='Ecluir Item'><img class='icon' src='img/delete.png'></button>" . "</li>";
                             }
                             echo "</ul>";
                         }
