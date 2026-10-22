@@ -1,0 +1,2 @@
+# Configuração local. Arquivos já rastreados exigem tratamento separado no Git.
+/acessos.php

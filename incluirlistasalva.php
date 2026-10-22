@@ -1,16 +1,15 @@
 <?php
-    require_once("conexao.php");
-    if (isset($_POST["fnome"])) {
-        try {
-            $parnome = ['nome' => $_POST["fnome"]];
-            $stmt = $conn->prepare("INSERT INTO lista (nome) VALUE (:nome)");
-            $stmt->execute($parnome);
-            header("Location: index.php");
-        } catch (PDOException $e) {
-            $msg = htmlspecialchars("ERRO! Não foi possível inclir a lista: ".$e->getMessage());
-            header("Location: index.php?msg=$msg");    
-        }
-    } else {
-        header("Location: incluirlista.php");
-    }
-?>
+require_once __DIR__ . '/funcoes.php';
+// A validação do servidor complementa as restrições do formulário HTML.
+validarPost();
+
+try {
+    $nome = validarTexto($_POST['fnome'] ?? null, 'Nome da lista', 100);
+    require __DIR__ . '/conexao.php';
+    // Os parâmetros mantêm os dados separados do comando SQL.
+    $stmt = $conn->prepare('INSERT INTO lista (nome) VALUES (:nome)');
+    $stmt->execute(['nome' => $nome]);
+    redirecionar('Lista incluída com sucesso!');
+} catch (Throwable $e) {
+    tratarErro($e);
+}

@@ -1,72 +1,49 @@
-* {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-}
-
-body {
-    background-color: lightgray;
-}
-
+/* Uma fonte legível facilita a leitura de nomes, quantidades e formulários. */
+* { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+body { margin: 0; background-color: lightgray; color: #202020; }
 main {
     display: flex;
     flex-direction: column;
     width: 90%;
-    margin: 10px auto;
+    max-width: 1100px;
+    margin: 16px auto;
+    padding: 16px;
     background-color: whitesmoke;
 }
-
-main form {
-    margin: 5px 10px 20px 10px;
-}
-
-main h1 {
-    display: block;
-    text-align: center;
-}
-
-button {
-    margin-left: 10px;
-    display: flexbox;
-    width: max-content;
-    padding: 3px 5px;
-    font-size: 1.2em;
-    height: 36px;
-    text-align: center;
-    vertical-align: center;
-
-}
-
-.icon {
-    vertical-align: middle;
-    height: auto;
-    width: 26px;
+h1 { text-align: center; font-size: 1.7rem; }
+h2 { margin: 12px 0 6px; font-size: 1.1rem; }
+/* inline-flex e align-items são valores válidos para alinhar texto e ícones. */
+button, .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 8px;
+    min-height: 38px;
+    border: 1px solid #777;
+    border-radius: 4px;
+    background: #eee;
+    color: #202020;
+    text-decoration: none;
+    font-size: 1rem;
     cursor: pointer;
 }
-
-li {
-    list-style: none;
-    width: max-content;
-    display: flexbox;
-    height: auto;
-    vertical-align: middle;
-    padding: 3px 5px;
+button:hover, .botao:hover { background: #dcebf1; }
+button:focus-visible, .botao:focus-visible, input:focus-visible {
+    outline: 3px solid #245a9a;
+    outline-offset: 2px;
 }
-
-h4 {
-    margin: 5px;
-    padding: 2px;
-}
-
-li:hover {
-    background-color: aliceblue;
-}
-
-li.item:hover {
-    background-color: rgb(231, 242, 245);
-}
-
-footer {
-    margin: 10px;
-    padding: 5px;
-    background-color: darkgray;
-    font-weight: bold;
-}
+.icon { width: 26px; height: 26px; object-fit: contain; }
+ul { padding-left: 18px; }
+li { list-style: none; padding: 6px 0; overflow-wrap: anywhere; }
+.listas { padding-left: 0; }
+.listas > li { border-bottom: 1px solid #ccc; }
+li.item:hover { background: aliceblue; }
+/* Os botões quebram de linha em telas pequenas e em descrições longas. */
+.acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.acoes form { margin: 0; }
+.cadastro { display: flex; flex-direction: column; gap: 8px; max-width: 600px; }
+input:not([type="hidden"]) { width: 100%; padding: 8px; font-size: 1rem; }
+.cadastro .acoes { margin-top: 12px; }
+footer { margin-top: 16px; padding: 8px; background-color: #ddd; }
+#msg { min-height: 1.2em; margin: 0; }

@@ -1,20 +1,25 @@
 <?php
-    require_once("conexao.php");
-    if (isset($_POST["fdescricao"])) {
-        try {
-            $par = ['descricao' => $_POST["fdescricao"]
-                    ,'quantidade' => $_POST["fquantidade"]
-                    ,'codigo_lista' => $_POST["fcodigolista"]];
-            $stmt = $conn->prepare("INSERT INTO itens (descricao, quantidade, codigo_lista) VALUE (:descricao, :quantidade, :codigo_lista)");
-            $stmt->execute($par);
-            $msg=htmlspecialchars("Item incluído com sucesso!");
-            header("Location: index.php?msg=$msg");
-        } catch (PDOException $e) {
-            $msg = htmlspecialchars("ERRO! Não foi possível inclir itens: ".$e->getMessage());
-            header("Location: index.php?msg=$msg");
-        }
-    } else {
-        $msg= htmlspecialchars("Erro ao incluir item");
-        header("Location: index.php?msg=$msg");
-    }
-?>
+require_once __DIR__ . '/funcoes.php';
+// A validação do servidor complementa as restrições do formulário HTML.
+validarPost();
+
+try {
+    $codigoLista = validarCodigo($_POST['fcodigolista'] ?? null);
+    $descricao = validarTexto($_POST['fdescricao'] ?? null, 'Descrição', 150);
+    $quantidade = validarQuantidade($_POST['fquantidade'] ?? null);
+    require __DIR__ . '/conexao.php';
+    buscarLista($conn, $codigoLista);
+    // O campo oculto é validado e a chave estrangeira verifica o vínculo no banco.
+    $stmt = $conn->prepare(
+        'INSERT INTO itens (descricao, quantidade, codigo_lista)
+         VALUES (:descricao, :quantidade, :codigo_lista)'
+    );
+    $stmt->execute([
+        'descricao' => $descricao,
+        'quantidade' => $quantidade,
+        'codigo_lista' => $codigoLista,
+    ]);
+    redirecionar('Item incluído com sucesso!');
+} catch (Throwable $e) {
+    tratarErro($e);
+}

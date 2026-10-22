@@ -1,31 +1,19 @@
+// defer garante que os elementos HTML já existam quando este script executar.
 function limpamsg() {
-    setInterval( function () { 
-        msg = document.getElementById("msg");
-        msg.innerHTML = "";
-     }, 5000)
+    // A mensagem é apagada uma única vez, depois de cinco segundos.
+    setTimeout(() => {
+        const msg = document.getElementById('msg');
+        if (msg) msg.textContent = '';
+    }, 5000);
 }
 
-
-function apagarlista(codigo, nome) {
-    if (window.confirm("Confirma exclusão da lista: " + codigo + " - " + nome + " ?")) {
-        window.location = "excluirlista.php?confirma=S&codigo=" + codigo + "&nome=" + nome;
-    }
+// Os textos ficam em atributos data, sem concatenar dados em código JavaScript.
+for (const formulario of document.querySelectorAll('form[data-confirmar]')) {
+    formulario.addEventListener('submit', (evento) => {
+        if (!window.confirm(formulario.dataset.confirmar)) {
+            evento.preventDefault(); // Cancelar não envia a exclusão ao servidor.
+        }
+    });
 }
 
-function alterarlista(codigo, nome) {
-    window.location = "alterarlista.php?codigo=" + codigo + "&nome=" + nome;
-}
-
-function incluiritens(codigo, nome) {
-    window.location = "incluiritens.php?codigo=" + codigo + "&nome=" + nome;
-}
-
-function apagaritem(codigo, descricao) {
-    if (window.confirm("Confirma exclusão do item: " + codigo + " - " + descricao + " ?")) {
-        window.location = "excluiritem.php?confirma=S&codigo=" + codigo + "&descricao=" + descricao;
-    }
-}
-
-function alteraritem(codigo) {
-    window.location = "alteraritem.php?codigo=" + codigo;
-}
+limpamsg();

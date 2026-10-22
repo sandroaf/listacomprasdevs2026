@@ -1,18 +1,17 @@
 <?php
-    require_once("conexao.php");
-    if (isset($_POST["fcodigo"]) && isset($_POST["fnome"])) {
-        try {
-            $par = ['nome' => $_POST["fnome"], 'codigo'=> $_POST["fcodigo"]];
-            $stmt = $conn->prepare("UPDATE lista SET nome = :nome WHERE codigo = :codigo");
-            $msg = htmlspecialchars("Lista alterda com sucesso! ");
-            $stmt->execute($par);
-            header("Location: index.php?msg=$msg");
-        } catch (PDOException $e) {
-            $msg = htmlspecialchars("ERRO! Não foi possível alterar a lista: ".$e->getMessage());
-            header("Location: index.php?msg=$msg");
-        }
-    } else {
-        $msg = htmlspecialchars("ERRO! Não foi possível alterar a lista");
-        header("Location: index.php?msg=$msg");
-    }
-?>
+require_once __DIR__ . '/funcoes.php';
+// A validação do servidor complementa as restrições do formulário HTML.
+validarPost();
+
+try {
+    $codigo = validarCodigo($_POST['fcodigo'] ?? null);
+    $nome = validarTexto($_POST['fnome'] ?? null, 'Nome da lista', 100);
+    require __DIR__ . '/conexao.php';
+    buscarLista($conn, $codigo);
+    // WHERE restringe a alteração à lista escolhida, mesmo se o nome não mudar.
+    $stmt = $conn->prepare('UPDATE lista SET nome = :nome WHERE codigo = :codigo');
+    $stmt->execute(['nome' => $nome, 'codigo' => $codigo]);
+    redirecionar('Lista alterada com sucesso!');
+} catch (Throwable $e) {
+    tratarErro($e);
+}
